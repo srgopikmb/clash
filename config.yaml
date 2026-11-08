@@ -28,7 +28,7 @@ dns:
     "+.okcdn.ru": 77.88.8.8
 
 proxies:
-  # Нода 1: xhttp транспорт (поддерживается последними версиями Mihomo)
+  # Нода 1: xhttp транспорт (packet-up режим для мобильных клиентов)
   - name: "🧪 Белые списки | Мобильный"
     type: vless
     server: 87.242.95.190
@@ -43,6 +43,7 @@ proxies:
       public-key: Na7TzrNj2DZAt22Bv7N82lxMa2UuejPoJHsUHJaRGw0
       short-id: 371fc83893ca7e12
     xhttp-opts:
+      mode: packet-up
       path: /api/v2/sync
       headers:
         Host: orbdash.fun
@@ -62,7 +63,7 @@ proxies:
       public-key: JKyvHjfExBpuZ90MCut7ZVQqSXXouvoX5Zo-4dI7DQY
       short-id: abb0c40875b28e05
 
-  # Нода 3: TCP + Reality Vision
+  # Нода 3: TCP + Reality Vision (добавлен flow vision)
   - name: "🇷🇺 → 🇫🇷 Франция 2 · RU каскад"
     type: vless
     server: 77.73.70.30
@@ -92,7 +93,7 @@ proxies:
       public-key: xzeviJNa7OUKajTyB9grh0eaAEC5ZYORH7LKXzjgw0g
       short-id: dd7d6daac9a5c70c
 
-  # Нода 5: TCP + Reality Vision
+  # Нода 5: TCP + Reality Vision (добавлен flow vision)
   - name: "🇧🇬 Болгария"
     type: vless
     server: 88.80.148.235
