@@ -1,0 +1,184 @@
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: rule
+log-level: warning
+unified-delay: true
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 77.88.8.8
+  nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+  nameserver-policy:
+    "geosite:category-ru": 77.88.8.8
+    "+.ru": 77.88.8.8
+    "+.su": 77.88.8.8
+    "+.xn--p1ai": 77.88.8.8
+    "+.max.ru": 77.88.8.8
+    "+.vk.ru": 77.88.8.8
+    "+.vk.com": 77.88.8.8
+    "+.oneme.ru": 77.88.8.8
+    "+.okcdn.ru": 77.88.8.8
+
+proxies:
+  # Нода 1: xhttp транспорт (поддерживается последними версиями Mihomo)
+  - name: "🧪 Белые списки | Мобильный"
+    type: vless
+    server: 87.242.95.190
+    port: 5443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    network: xhttp
+    tls: true
+    udp: true
+    servername: orbdash.fun
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: Na7TzrNj2DZAt22Bv7N82lxMa2UuejPoJHsUHJaRGw0
+      short-id: 371fc83893ca7e12
+    xhttp-opts:
+      path: /api/v2/sync
+      headers:
+        Host: orbdash.fun
+
+  # Нода 2: TCP + Reality Vision
+  - name: "🇩🇪 🧪 Германия"
+    type: vless
+    server: 45.142.114.36
+    port: 443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    flow: xtls-rprx-vision
+    tls: true
+    udp: true
+    servername: depre.obnet.work
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: JKyvHjfExBpuZ90MCut7ZVQqSXXouvoX5Zo-4dI7DQY
+      short-id: abb0c40875b28e05
+
+  # Нода 3: TCP + Reality Vision
+  - name: "🇷🇺 → 🇫🇷 Франция 2 · RU каскад"
+    type: vless
+    server: 77.73.70.30
+    port: 443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    flow: xtls-rprx-vision
+    tls: true
+    udp: true
+    servername: fr90.noped.online
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: WCB8kp86N50EroPV_xXu1lhPpuSlVeEOC9nSXH1zElg
+      short-id: 7cb1e4f2f14cf32c
+
+  # Нода 4: TCP + Reality Vision
+  - name: "🇳🇱 Нидерланды 2 [AI]"
+    type: vless
+    server: 94.249.189.226
+    port: 443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    flow: xtls-rprx-vision
+    tls: true
+    udp: true
+    servername: sc.vcloudn.com
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: xzeviJNa7OUKajTyB9grh0eaAEC5ZYORH7LKXzjgw0g
+      short-id: dd7d6daac9a5c70c
+
+  # Нода 5: TCP + Reality Vision
+  - name: "🇧🇬 Болгария"
+    type: vless
+    server: 88.80.148.235
+    port: 443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    flow: xtls-rprx-vision
+    tls: true
+    udp: true
+    servername: blg.noped.online
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: Cv7QBZCCUqMaCKuOJoEDDsd-wppI-_Tiw6gIPRAuJg0
+      short-id: b7f990b5d50a7ae6
+
+  # Нода 6: TCP + Reality Vision
+  - name: "🇩🇪 Германия 2"
+    type: vless
+    server: 37.44.215.4
+    port: 443
+    uuid: 92d1543b-679c-430f-b5c5-6169e9834d78
+    flow: xtls-rprx-vision
+    tls: true
+    udp: true
+    servername: prede.vcloudn.com
+    client-fingerprint: firefox
+    reality-opts:
+      public-key: Mh-v15oV2HMBF8hD83xX4WONqaEznXEFF7U3TEaqMnk
+      short-id: b7f990b5d50a7ae6
+
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+      - AUTO
+      - "🧪 Белые списки | Мобильный"
+      - "🇩🇪 🧪 Германия"
+      - "🇷🇺 → 🇫🇷 Франция 2 · RU каскад"
+      - "🇳🇱 Нидерланды 2 [AI]"
+      - "🇧🇬 Болгария"
+      - "🇩🇪 Германия 2"
+
+  - name: AUTO
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    proxies:
+      - "🧪 Белые списки | Мобильный"
+      - "🇩🇪 🧪 Германия"
+      - "🇷🇺 → 🇫🇷 Франция 2 · RU каскад"
+      - "🇳🇱 Нидерланды 2 [AI]"
+      - "🇧🇬 Болгария"
+      - "🇩🇪 Германия 2"
+
+rules:
+  # Прямой маршрут до российского DNS-резолвера
+  - IP-CIDR,77.88.8.8/32,DIRECT,no-resolve
+
+  # Проксирование зарубежных DNS
+  - IP-CIDR,8.8.8.8/32,PROXY,no-resolve
+  - IP-CIDR,1.1.1.1/32,PROXY,no-resolve
+
+  # Прямой маршрут для локальных сетей
+  - GEOIP,LAN,DIRECT,no-resolve
+  - GEOIP,private,DIRECT,no-resolve
+
+  # Списки доменов RU (из правил маршрутизации Xray)
+  - GEOSITE,category-ru,DIRECT
+  - DOMAIN-SUFFIX,ru,DIRECT
+  - DOMAIN-SUFFIX,su,DIRECT
+  - DOMAIN-SUFFIX,xn--p1ai,DIRECT
+  - DOMAIN-SUFFIX,yandex.com,DIRECT
+  - DOMAIN-SUFFIX,yandex.net,DIRECT
+  - DOMAIN-SUFFIX,vk.com,DIRECT
+  - DOMAIN-SUFFIX,userapi.com,DIRECT
+  - DOMAIN-SUFFIX,wildberries.ru,DIRECT
+  - DOMAIN-SUFFIX,wb.ru,DIRECT
+  - DOMAIN-SUFFIX,ozon.ru,DIRECT
+  - DOMAIN-SUFFIX,sberbank.ru,DIRECT
+  - DOMAIN-SUFFIX,tinkoff.ru,DIRECT
+  - DOMAIN-SUFFIX,gosuslugi.ru,DIRECT
+  - DOMAIN-SUFFIX,nalog.gov.ru,DIRECT
+  - DOMAIN-SUFFIX,mos.ru,DIRECT
+
+  # GeoIP Россия напрямую
+  - GEOIP,RU,DIRECT
+
+  # Весь остальной трафик через выбранный прокси
+  - MATCH,PROXY
